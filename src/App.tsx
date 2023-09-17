@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 
+import { Filter } from "./components/Filter";
 import { Composer } from "./components/Composer";
 import { TodoList } from "./components/TodoList";
 import "./App.css";
@@ -19,8 +20,13 @@ const fakeTodos = {
   3: { title: "Style everything up", id: 3, completed: false },
 };
 
+const filters = ["all", "completed", "active"] as const;
+
+export type Filters = (typeof filters)[number];
+
 function App() {
   const [todos, setTodos] = useState<TodoCollection>(fakeTodos);
+  const [filter, setFilter] = useState<Filters>("all");
 
   const completeTodo = useCallback(
     (id: Todo["id"]) => {
@@ -39,10 +45,22 @@ function App() {
     [todos]
   );
 
+  const filterTodos = () => {
+    if (filter === "all") {
+      return Object.values(todos);
+    }
+    return Object.values(todos).filter((todo) => (filter === "completed" ? todo.completed : !todo.completed));
+  };
+
+  const changeFilter = useCallback((filter: Filters) => {
+    setFilter(filter);
+  }, []);
+
   return (
     <main>
-      <TodoList completeTodo={completeTodo} todos={Object.values(todos)} />
+      <Filter changeFilter={changeFilter} filters={filters} />
       <Composer createTodo={createTodo} />
+      <TodoList completeTodo={completeTodo} todos={filterTodos()} />
     </main>
   );
 }
