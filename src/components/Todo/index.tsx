@@ -43,14 +43,33 @@ export const Todo: React.FC<Props> = ({ todo, onClick, ...props }) => {
       timeout={300}
       nodeRef={ref}
     >
-      <li onClick={() => onClick(id)} ref={ref} className={cx(styles.todo, { [styles["todo--completed"]]: completed })}>
-        <div className={styles["todo__completed-circle"]}>
-          <div className={styles["todo__completed-icon"]}>
-            <CheckMark />
+      <CSSTransition
+        in={completed}
+        nodeRef={ref}
+        timeout={200}
+        classNames={{
+          enter: styles["completed-enter"],
+          enterActive: styles["completed-enter-active"],
+        }}
+      >
+        <li
+          onClick={() => onClick(id)}
+          ref={ref}
+          className={cx(styles.todo, { [styles["todo--completed"]]: completed })}
+        >
+          <div className={styles["todo__completed-circle"]}>
+            <div className={styles["todo__completed-icon"]}>
+              <CheckMark />
+            </div>
           </div>
-        </div>
-        <div>{title}</div>
-      </li>
+          <div className={styles.todo__title}>
+            <div
+              className={cx(styles["line-through"], { [styles["line-through--hidden"]]: height.current! > 50 })}
+            ></div>
+            {title}
+          </div>
+        </li>
+      </CSSTransition>
     </CSSTransition>
   );
 };

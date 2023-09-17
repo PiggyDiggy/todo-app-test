@@ -8,11 +8,35 @@
   line-height: 1.45;
   cursor: pointer;
   overflow: hidden;
+  position: relative;
+  transition: color 0.2s ease;
 }
 
 .todo--completed {
   color: silver;
-  text-decoration: line-through;
+}
+
+.line-through {
+  display: none;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: 2px;
+  background-color: silver;
+}
+
+.todo--completed .line-through:not(.line-through--hidden) {
+  display: block;
+}
+
+.completed-enter .line-through {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.completed-enter-active .line-through {
+  transform: scaleX(1);
+  transition: transform 0.2s ease;
 }
 
 .todo:last-child {
@@ -25,6 +49,7 @@
   border: 1px solid var(--outline-grey);
   border-radius: 100vmax;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .todo--completed .todo__completed-circle {
@@ -43,6 +68,20 @@
   display: flex;
 }
 
-.todo-transition{
+.completed-enter .todo__completed-icon {
+  transform: translateX(-100%);
+}
+
+.completed-enter-active .todo__completed-icon {
+  transform: translateX(0);
+  transition: transform 0.2s ease;
+}
+
+.todo__title {
+  position: relative;
+  word-break: break-word;
+}
+
+.todo-transition {
   transition: height 0.3s ease, padding 0.3s ease, border-width 0.15s ease;
 }
