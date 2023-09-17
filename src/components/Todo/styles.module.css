@@ -1,0 +1,43 @@
+.todo {
+  padding: 0.5rem;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.todo--completed {
+  color: silver;
+  text-decoration: line-through;
+}
+
+.todo:last-child {
+  border: none;
+}
+
+.todo__completed-circle {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ddd;
+  border-radius: 100vmax;
+  flex-shrink: 0;
+}
+
+.todo--completed .todo__completed-circle {
+  border-color: #54cf45;
+}
+
+.todo__completed-icon {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: #54cf45;
+  margin-top: 3px;
+}
+
+.todo--completed .todo__completed-icon {
+  display: flex;
+}

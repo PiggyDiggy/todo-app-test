@@ -1,0 +1,22 @@
+.filters {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.filter__button {
+  font-family: inherit;
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #666;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.filter--active .filter__button {
+  border-color: #ebd7d8;
+}

@@ -1,0 +1,6 @@
+.workspace {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.05);
+}

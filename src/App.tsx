@@ -58,9 +58,12 @@ function App() {
 
   return (
     <main>
-      <Filter changeFilter={changeFilter} filters={filters} />
-      <Composer createTodo={createTodo} />
-      <TodoList completeTodo={completeTodo} todos={filterTodos()} />
+      <h1 className="main__title">Todos</h1>
+      <div className="workspace">
+        <Filter current={filter} changeFilter={changeFilter} filters={filters} />
+        <Composer createTodo={createTodo} />
+        <TodoList completeTodo={completeTodo} todos={filterTodos()} />
+      </div>
     </main>
   );
 }
