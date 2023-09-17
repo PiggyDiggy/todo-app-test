@@ -26,3 +26,8 @@ main {
   margin-top: 0;
   font-weight: normal;
 }
+
+:root {
+  --text-main: #444;
+  --outline-grey: #ddd;
+}

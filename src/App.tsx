@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 
-import { Filter } from "./components/Filter";
+import { StatusBar } from "./components/StatusBar";
+import { EmptyListPlaceholder } from "./components/EmptyListPlaceholder";
 import { Composer } from "./components/Composer";
 import { TodoList } from "./components/TodoList";
 import "./App.css";
@@ -45,7 +46,7 @@ function App() {
     [todos]
   );
 
-  const filterTodos = () => {
+  const filterTodos = (filter: Filters) => {
     if (filter === "all") {
       return Object.values(todos);
     }
@@ -56,14 +57,31 @@ function App() {
     setFilter(filter);
   }, []);
 
+  const removeCompleted = useCallback(() => {
+    const newList = Object.values(todos).reduce((acc, todo) => {
+      if (!todo.completed) {
+        acc[todo.id] = todo;
+      }
+      return acc;
+    }, {} as TodoCollection);
+    setTodos(newList);
+  }, [todos]);
+
   return (
     <main>
       <h1 className="main__title">Todos</h1>
       <div className="workspace">
-        <Filter current={filter} changeFilter={changeFilter} filters={filters} />
+        <StatusBar
+          removeCompleted={removeCompleted}
+          activeTodosCount={filterTodos("active").length}
+          filters={filters}
+          current={filter}
+          changeFilter={changeFilter}
+        />
         <Composer createTodo={createTodo} />
-        <TodoList completeTodo={completeTodo} todos={filterTodos()} />
+        <TodoList completeTodo={completeTodo} todos={filterTodos(filter)} />
       </div>
+      <EmptyListPlaceholder count={filterTodos(filter).length} filter={filter} />
     </main>
   );
 }

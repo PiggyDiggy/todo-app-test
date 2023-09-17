@@ -1,0 +1,17 @@
+.status-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  font-size: 14px;
+  padding-inline: 1rem;
+  color: var(--text-main);
+}
+
+.button {
+  font: inherit;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  text-align: end;
+  cursor: pointer;
+}
