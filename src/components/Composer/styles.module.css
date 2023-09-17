@@ -3,6 +3,7 @@
   position: relative;
   padding-block: 0.5rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.1) -10%, transparent 10%);
+  border-bottom: 1px solid var(--outline-grey);
 }
 
 .input {

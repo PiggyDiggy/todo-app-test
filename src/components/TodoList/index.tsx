@@ -1,4 +1,5 @@
 import React from "react";
+import { TransitionGroup } from "react-transition-group";
 
 import type { Todo as TodoType } from "../../App";
 import { Todo } from "../Todo";
@@ -12,12 +13,10 @@ type Props = {
 
 export const TodoList: React.FC<Props> = ({ todos, completeTodo }) => {
   return (
-    <div>
-      <ul className={styles["todo-list"]}>
-        {todos.map((todo) => (
-          <Todo onClick={completeTodo} todo={todo} key={todo.id} />
-        ))}
-      </ul>
-    </div>
+    <TransitionGroup component="ul" className={styles["todo-list"]}>
+      {todos.map((todo) => (
+        <Todo onClick={completeTodo} todo={todo} key={todo.id} />
+      ))}
+    </TransitionGroup>
   );
 };
