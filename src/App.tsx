@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 
+import { Composer } from "./components/Composer";
 import { TodoList } from "./components/TodoList";
 import "./App.css";
 
@@ -21,14 +22,27 @@ const fakeTodos = {
 function App() {
   const [todos, setTodos] = useState<TodoCollection>(fakeTodos);
 
-  const completeTodo = useCallback((id: Todo["id"]) => {
-    const modifiedTodo = { ...todos[id], completed: true };
-    setTodos((todos) => ({ ...todos, [id]: modifiedTodo }));
-  }, []);
+  const completeTodo = useCallback(
+    (id: Todo["id"]) => {
+      const modifiedTodo = { ...todos[id], completed: true };
+      setTodos({ ...todos, [id]: modifiedTodo });
+    },
+    [todos]
+  );
+
+  const createTodo = useCallback(
+    (title: Todo["title"]) => {
+      const id = Object.values(todos).length;
+      const newTodo = { title, completed: false, id };
+      setTodos({ ...todos, [id]: newTodo });
+    },
+    [todos]
+  );
 
   return (
     <main>
       <TodoList completeTodo={completeTodo} todos={Object.values(todos)} />
+      <Composer createTodo={createTodo} />
     </main>
   );
 }
