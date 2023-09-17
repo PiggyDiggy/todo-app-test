@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 
 import { StatusBar } from "./components/StatusBar";
 import { EmptyListPlaceholder } from "./components/EmptyListPlaceholder";
@@ -31,8 +31,9 @@ function App() {
 
   const completeTodo = useCallback(
     (id: Todo["id"]) => {
-      const modifiedTodo = { ...todos[id], completed: true };
-      setTodos({ ...todos, [id]: modifiedTodo });
+      const todo = todos[id];
+      if (todo.completed) return;
+      setTodos({ ...todos, [id]: { ...todo, completed: true } });
     },
     [todos]
   );
@@ -52,6 +53,8 @@ function App() {
     }
     return Object.values(todos).filter((todo) => (filter === "completed" ? todo.completed : !todo.completed));
   };
+
+  const filteredTodos = useMemo(() => filterTodos(filter), [todos, filter]);
 
   const changeFilter = useCallback((filter: Filters) => {
     setFilter(filter);
@@ -79,9 +82,9 @@ function App() {
           changeFilter={changeFilter}
         />
         <Composer createTodo={createTodo} />
-        <TodoList completeTodo={completeTodo} todos={filterTodos(filter)} />
+        <TodoList completeTodo={completeTodo} todos={filteredTodos} />
       </div>
-      <EmptyListPlaceholder count={filterTodos(filter).length} filter={filter} />
+      <EmptyListPlaceholder count={filteredTodos.length} filter={filter} />
     </main>
   );
 }
