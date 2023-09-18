@@ -53,6 +53,7 @@ export const Todo: React.FC<Props> = ({ todo, onClick, ...props }) => {
         }}
       >
         <li
+          data-testid="todo"
           onClick={() => onClick(id)}
           ref={ref}
           className={cx(styles.todo, { [styles["todo--completed"]]: completed })}
