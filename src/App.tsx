@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo, useRef } from "react";
 
 import { StatusBar } from "./components/StatusBar";
 import { EmptyListPlaceholder } from "./components/EmptyListPlaceholder";
@@ -27,6 +27,7 @@ export type Filters = (typeof filters)[number];
 function App() {
   const [todos, setTodos] = useState<TodoCollection>(fakeTodos);
   const [filter, setFilter] = useState<Filters>("all");
+  const nextId = useRef(Object.keys(todos).length);
 
   const completeTodo = useCallback(
     (id: Todo["id"]) => {
@@ -39,7 +40,7 @@ function App() {
 
   const createTodo = useCallback(
     (title: Todo["title"]) => {
-      const id = Object.values(todos).length;
+      const id = nextId.current++
       const newTodo = { title, completed: false, id };
       setTodos({ ...todos, [id]: newTodo });
     },
